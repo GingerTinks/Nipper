@@ -1,3 +1,4 @@
+help_text = '''
 Manual Config Retrieval Tool Help Guide
 
 Arguments - 
@@ -13,10 +14,9 @@ Arguments -
 
 Example - 
 
-python retrieve-config.py --connection-script="C:\Program Files\Nipper\resources\Connection Info\connection-script.js" 
+python retrieve-config.py --connection-script="connection-script.js" 
                             --output="C:\Files\manual-config.json" --address="https://192.168.0.1:443" 
                             --username="user" --password="password" --sslVerify="off"
 
-Further instructions are avaliable at <LINK TO HELP GUIDE>
-
 For further help, visit https://www.titania.com/support/
+'''

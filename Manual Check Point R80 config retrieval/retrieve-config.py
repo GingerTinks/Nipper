@@ -1,4 +1,5 @@
 from classes.program import get_config, parse_args
+from help.help import help_text
 import sys
 
 if __name__ == "__main__":
@@ -11,7 +12,6 @@ if __name__ == "__main__":
         get_config()
     else:
         print('Missing arguments - see the following for help.')
-        with open('./help.txt', 'r') as help_file:
-            print(help_file.read())
+        print(help_text)
 
 
