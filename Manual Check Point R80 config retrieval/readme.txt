@@ -9,8 +9,8 @@ https://www.python.org/downloads/
 https://pypi.org/project/pip/
 https://pypi.org/project/pipenv/
 
-Alternativley if you do not wish to install any additional software, an executable version of this script 
-is avaliable. See https://www.titania.com/support/ for more info.
+Alternatively if you do not wish to install any additional software, an executable version of this script 
+for Windows is available in the same code repository. See https://www.titania.com/support/ for more info.
 
 
 Running retrieve-config.py - 
@@ -19,7 +19,7 @@ Once all of the requirements have been met, open a command prompt and navigate t
 Run 'pipenv sync' to download the python modules needed to run.
 Once complete, run 'pipenv run retrieve-config.py' with the relevant arguments, e.g. - 
 
-pipenv run retrieve-config.py --connection-script="C:\Program Files\Nipper\resources\Connection Info\connection-script.js" 
+pipenv run retrieve-config.py --connection-script="connection-script.js" 
                                 --output="C:\Files\manual-config.json" --address="https://192.168.0.1:443" 
                                 --username="user" --password="password" --sslVerify="off"
 
