@@ -1,6 +1,7 @@
 import requests
 import urllib3
 import json
+"""This disables warnings when running with the sslVerify option off"""
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
