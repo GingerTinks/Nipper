@@ -41,7 +41,7 @@ function main() {
 
     progressFeedback.updateCurrentProgress("Finished retrieving from device", 80);
 
-    return JSON.stringify(config);
+    return JSON.stringify(config, null, 2);
 }
 
 function login() {
