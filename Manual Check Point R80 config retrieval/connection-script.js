@@ -155,6 +155,9 @@ function retrieveFilteringRules() {
         i++;
     }
 
+    // get the gateways and servers to extract which access policies are installed
+    accessLayersRequestResponses = accessLayersRequestResponses.concat(retrieveObjects("show-gateways-and-servers", "full"));
+
     configPart["request-response"] = accessLayersRequestResponses.concat(accessRulebaseRequestResponses)
     return configPart;
 }
