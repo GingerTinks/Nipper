@@ -415,10 +415,12 @@ function retrieveVPN() {
         dhGroupUids.push(s2sVpnRequestResponses[i].response.body.ikeP2.ikeP2PfsDhGrp);
     }
 
-    // parse DH group uid's from the 'RemoteAccess' VPN
-    var remoteAccessVpnGenericObject = remoteAccessRequestResponse.response.body.objects[0];
-    dhGroupUids.push(remoteAccessVpnGenericObject.ikeP1.ikeP1DhGrp);
-    dhGroupUids.push(remoteAccessVpnGenericObject.ikeP2.ikeP2PfsDhGrp);
+    // parse DH group uid's from the 'RemoteAccess' 
+    if(remoteAccessRequestResponse.response.body.objects.length > 0) {
+        var remoteAccessVpnGenericObject = remoteAccessRequestResponse.response.body.objects[0];
+        dhGroupUids.push(remoteAccessVpnGenericObject.ikeP1.ikeP1DhGrp);
+        dhGroupUids.push(remoteAccessVpnGenericObject.ikeP2.ikeP2PfsDhGrp);
+    }
 
     var uniqueDhGroupUids = [];
     for(var i = 0; i < dhGroupUids.length; i++) {
