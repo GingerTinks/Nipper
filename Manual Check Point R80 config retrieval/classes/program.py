@@ -1,7 +1,6 @@
-import js2py
 from js2py import EvalJs as Eval
 from classes.connection_manager import (Request, Response, ConnectionDetails, HTTPRequest, 
-                                        JsonRequestResponseWriter, ProgressFeedback, ErrorHandler)
+                                        JsonRequestResponseWriter, ProgressFeedback, ErrorHandler, Utility)
 
 con_script = ''
 output = ''
@@ -24,6 +23,8 @@ def get_config():
 
     device_url = address
     request = Request()
+    request.url = device_url
+
     response = Response()
 
     connection_details = ConnectionDetails()
@@ -35,6 +36,7 @@ def get_config():
     json_request_response_writer = JsonRequestResponseWriter()
     progress_feedback = ProgressFeedback()
     error_handler = ErrorHandler()
+    util = Utility()
 
     js_file = ''
 
@@ -46,8 +48,9 @@ def get_config():
         return
 
     context = Eval({'deviceUrl': device_url, 'request': request, 'response': response, 'connectionDetails': connection_details, 
-                    'connection': connection, 'jsonRequestResponseWriter': json_request_response_writer, 'progressFeedback': progress_feedback, 
-                    'errorHandler': error_handler})
+        'connection': connection, 'jsonRequestResponseWriter': json_request_response_writer, 'progressFeedback': progress_feedback, 
+        'errorHandler': error_handler, 'utility': util})
+    
     context.execute(js_file)
     config = context.main()
 

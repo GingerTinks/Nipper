@@ -1,6 +1,4 @@
-import requests
-import urllib3
-import json
+import requests, urllib3, json, base64
 """This disables warnings when running with the sslVerify option off"""
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -32,6 +30,9 @@ class Request:
     def getBody(self):
         return self.body
 
+    def getHeader(self, header):
+        return self.header.get(header, '')
+
     def get_header(self):
         return self.header
 
@@ -44,12 +45,19 @@ class Response:
     def __init__(self):
         self.statusCode = 0
         self.body = {}
+        self.headers = {}
 
     def getStatusCode(self):
         return self.statusCode
 
     def getBody(self):
         return json.dumps(self.body)
+
+    def getHeader(self, header):
+        return self.headers.get(header, '')
+
+    def getReasonPhrase(self):
+        return "204"
 
     def set_body(self, body):
         self.body = body
@@ -59,6 +67,9 @@ class Response:
 
     def get_header(self):
         return ''
+
+    def set_headers(self, headers):
+        self.headers = headers
 
 class ConnectionDetails:
     """Holds details required to make requests"""
@@ -88,18 +99,36 @@ class HTTPRequest:
 
     def __post_request(self, request, response):
         try:
-            req = requests.post(request.getURL(), json=json.loads(request.getBody()), headers=request.get_header(), verify=self.sslVerify)
-            response.set_body(req.json())
+            request_body = request.getBody()
+            if request_body:
+                req = requests.post(request.getURL(), json=json.loads(request_body), headers=request.get_header(), verify=self.sslVerify)
+            else:
+                req = requests.post(request.getURL(), headers=request.get_header(), verify=self.sslVerify)
+            
+            try:
+                response.set_body(req.json())
+            except:
+                response.set_body(req.text)
+
             response.set_status_code(req.status_code)
-        except:
+            response.set_headers(req.headers)
+        except Exception as e:
+            print(f'Exception sending post request: {e}')
             response.set_body('Unable to send request to device at {}'.format(request.getURL()))
 
     def __get_request(self, request, response):
         try:
-            req = requests.get(request.getURL())
-            response.set_body(req.json())
+            req = requests.get(request.getURL(), headers=request.get_header(), verify=self.sslVerify)
+
+            try:
+                response.set_body(req.json())
+            except:
+                response.set_body(req.text)
+            
             response.set_status_code(req.status_code)
-        except:
+            response.set_headers(req.headers)
+        except Exception as e:
+            print(f'Exception sending get request: {e}')
             response.set_body('Unable to send request to device at {}'.format(request.getURL()))
 
 
@@ -107,9 +136,10 @@ class JsonRequestResponseWriter:
     """Writes json data to the required format"""
 
     def writeJson(self, command, request, response):
+        request_body = json.loads(request.getBody()) if request.getBody() else {}
         req_res = {
             "request":{
-                "body": json.loads(request.getBody()),
+                "body": request_body,
                 "command": command,
                 "headers": request.get_header(),
             },
@@ -126,7 +156,7 @@ class ProgressFeedback:
     """Used to update user on retrieval progress"""
 
     def updateCurrentProgress(self, message, percentage):
-        print(message)
+        print(f'{percentage}% {message}')
 
 
 class ErrorHandler:
@@ -148,3 +178,8 @@ class ErrorHandler:
 
     def setNetworkResponse(self, error):
         self.network_response = error
+
+class Utility:
+    """Handles converting strings to base64"""
+    def toBase64(self, string):
+        return base64.b64encode(str.encode(string)).decode('utf-8')
