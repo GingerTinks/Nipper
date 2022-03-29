@@ -19,9 +19,9 @@ Running retrieve-config.py -
 
 Once all of the requirements have been met, open a command prompt and navigate to the current directory.
 Run 'pipenv sync' to download the python modules needed to run.
-Once complete, run 'pipenv run retrieve-config.py' with the relevant arguments, e.g. - 
+Once complete, run 'pipenv run python retrieve-config.py' with the relevant arguments, e.g. - 
 
-pipenv run retrieve-config.py --connection-script="connection-script.js" 
+pipenv run python retrieve-config.py --connection-script="connection-script.js" 
                                 --output="C:\Files\manual-config.json" --address="https://192.168.0.1:443" 
                                 --username="user" --password="password" --sslVerify="off"
 
