@@ -25,6 +25,7 @@ function main() {
 
     /* Standard domain */
     var config = [
+        { "config-retrieval-method": "Titania Connection - Check Point R80" },
         retrieveLoginMessage(),
         retrieveFilteringRules(),
         retrieveNatRulebase(),
@@ -415,7 +416,7 @@ function retrieveVPN() {
         dhGroupUids.push(s2sVpnRequestResponses[i].response.body.ikeP2.ikeP2PfsDhGrp);
     }
 
-    // parse DH group uid's from the 'RemoteAccess' 
+    // parse DH group uid's from the 'RemoteAccess' VPN
     if(remoteAccessRequestResponse.response.body.objects.length > 0) {
         var remoteAccessVpnGenericObject = remoteAccessRequestResponse.response.body.objects[0];
         dhGroupUids.push(remoteAccessVpnGenericObject.ikeP1.ikeP1DhGrp);

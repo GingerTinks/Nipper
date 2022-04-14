@@ -11,7 +11,7 @@ https://pypi.org/project/pipenv/
 
 Alternatively if you do not wish to install any additional software, an executable version of this script 
 for Windows is available in this repository.
-This is located nipper_config_retrieval/Manual Check Point R80 config retrieval/Executable
+This is located nipper_config_retrieval/Manual config retrieval/Executable
 This executable can be run with the same arguments as retrieve-config.py.
 
 
