@@ -1,5 +1,5 @@
 from classes.program import get_config, parse_args
-from help.help import help_text
+from classes.help import help_text
 import sys
 
 if __name__ == "__main__":
