@@ -140,12 +140,10 @@ class JsonRequestResponseWriter:
         req_res = {
             "request":{
                 "body": request_body,
-                "command": command,
-                "headers": request.get_header(),
+                "command": command
             },
             "response":{
-                "body": json.loads(response.getBody()),
-                "headers": response.get_header()
+                "body": json.loads(response.getBody())
             }
         }
 
